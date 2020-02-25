@@ -20,7 +20,5 @@ var user_routes= require ('./routes/user')
 // prefijo de rutas 
 app.use('/v1/api', user_routes, segments_routes)
 
-
-
 //exportar 
 module.exports = app;
