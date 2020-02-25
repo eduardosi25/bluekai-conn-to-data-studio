@@ -18,9 +18,10 @@ function pruebas (req, res){
 }
 
 function saveUser (req, res){
-    
+    console.log("hola");
     var params = req.body;
     var user = new User();
+   // console.log(params)
     if (params.name && params.lastname && 
         params.email && params.password){
 
@@ -33,8 +34,6 @@ function saveUser (req, res){
             user.role = 'ROLE_USER';
             user.clientId = params.clientId;
             user.status = params.status;
-            user.token = 'gtrfcedilkmujnhybgtvrfikujhygtrfloikmrfiokujhygtrf'
-
             //controlar usuarios duplicados
             User.find({email:user.email.toLowerCase()})
             .exec((err, users)=>{
@@ -55,7 +54,7 @@ function saveUser (req, res){
                     });
                 }
             });
-
+      
             //cifra los datos y guarda la pass
     }else{
             res.status(200).send({
@@ -65,6 +64,7 @@ function saveUser (req, res){
  }
 
 function loginUser(req,res){
+    console.log("login")
     var params = req.body;
     var email = params.email;
     var password = params.password;

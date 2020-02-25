@@ -8,9 +8,9 @@ var UserSchema = Schema({
     email:String,
     password:String,
     role: String,
-    clientId: String,
-    status: String,
-    token: String,
+    // clientId: String,
+    // status: String,
+    // token: String,
 
 })
 

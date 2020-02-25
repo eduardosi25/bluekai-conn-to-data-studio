@@ -2,8 +2,8 @@
 
 var jwt = require('jwt-simple');
 var moment = require('moment');
-var secret = 'clave_secreta';
-
+const dotenv = require('dotenv');
+dotenv.config({path:'../config/config.env'});
 exports.createToken = function(user){
     var payload = {
         sub: user._id,
@@ -16,5 +16,5 @@ exports.createToken = function(user){
 
     };
 
-    return jwt.encode(payload, secret)
+    return jwt.encode(payload, process.env.JWT_SECRET)
 };
