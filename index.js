@@ -12,10 +12,18 @@ const DB_PASSWORD = process.env.DB_PASSWORD;
 const DB_TABLE = process.env.DB_TABLE;
 //conexion base de datos 
 mongoose.promise = global.promise;
-mongoose.connect( `mongodb+srv://${DB_USER}:${DB_PASSWORD}@audiencekit1-76o4f.mongodb.net/${DB_TABLE}?retryWrites=true&w=majority`,
-                  { useUnifiedTopology: true,  useNewUrlParser: true, useFindAndModify: true})
+
+// mongoose.connect( `mongodb+srv://${DB_USER}:${DB_PASSWORD}@audiencekit1-76o4f.mongodb.net/${DB_TABLE}?retryWrites=true&w=majority`,
+//                   { useUnifiedTopology: true,  useNewUrlParser: true, useFindAndModify: false})
+
+ mongoose.connect( `mongodb+srv://appaudiencekit:aEqslb71Vh0DUVkD@audiencekit1-76o4f.mongodb.net/audienceKit?retryWrites=true&w=majority`,
+                   {useNewUrlParser: true, useUnifiedTopology: true })
+  
+// mongoose.connect( `mongodb://localhost:27017/audienceKit`,
+//                    {useNewUrlParser: true,  useNewUrlParser:true, useUnifiedTopology: true })
+
 .then (()=>{
-    console.log("la conexion esta lista")
+    console.log("la conexion esta lista en produccion")
     //Crear servidor 
     app.listen(PORT, ()=>{
       console.log(`servidor corriendo en ${process.env.NODE_ENV} mode on port ${PORT}`)
