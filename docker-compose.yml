@@ -2,28 +2,37 @@ version: '3'
 services:
   nodejs:
       build:
-        context: .
-        dockerfile: Dockerfile
-      image: nodejs
-      container_name: audience_api
-      restart: unless-stopped
-      env_file: ./config/config.env
+         context: .
+        # dockerfile: Dockerfile
+      # image: nodejs
+      # container_name: nodejs
+      #restart: unless-stopped
+      # env_file: ./config/config.env
       # environment:
-      #   - MONGO_USERNAME=$MONGO_USERNAME
-      #   - MONGO_PASSWORD=$MONGO_PASSWORD
-      #   - MONGO_HOSTNAME=db
-      #   - MONGO_PORT=$MONGO_PORT
-      #   - MONGO_DB=$MONGO_DB
+      #   - NODE_ENV=production
       ports:
         - "3000:3000"
+      links:
+        - mongodb
+      depends_on:
+        - mongodb
+
+
   mongodb:
-    image: mongo:latest
-    ports:
-      - 27017:27017
+      image: mongo:latest
+      container_name: "mongo"
+      env_file: ./config/config.env
+      volumes:
+          - ./data/db:/data/db
+      ports:
+          - 27017:27017
+      command: mongod --logpath=/dev/null # --quiet
+
+
   mongo_seed:
     image: mongo:latest
-    links:
-      - mongodb
+    # links:
+    #   - mongodb
     volumes:
       - ./mongo-seed:/mongo-seed
     command:
