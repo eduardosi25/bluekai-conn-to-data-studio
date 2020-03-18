@@ -18,21 +18,25 @@ function updateIframeForSegment(req, res){
      });
 }
 
-// function updateSegment(req, res){
-//     var image = req.body.image;
-//     var category = req.body.category;
-//     var displayName = req.body.displayName;
-//     var id = req.params.id;
+function updateSegmentById(req, res){
+    var image = req.body.image;
+    var category = req.body.category;
+    var displayName = req.body.displayName;
+    var id = req.params.id;
+    console.log(id)
+    console.log(image)
+    console.log(category)
+    console.log(displayName)
 
-//     Segment.findByIdAndUpdate({ _id:id }, { image:image, category:category,displayName:displayName }, {new: true},  (err, segment)=>{
+    Segment.findByIdAndUpdate({ _id: id }, { image: image, category: category, displayName: displayName }, {new: true},  (err, segment)=>{
     
-//          if (!segment) return res.status(404).send({ message:'el id no existe' });
+         if (!segment) return res.status(404).send({ message:'el id no existe' });
          
-//          if (segment.length === 0) return res.status(404).send({ message:'no hay coincidencias con el id ' });
+         if (segment.length === 0) return res.status(404).send({ message:'no hay coincidencias con el id ' });
  
-//          return res.status(200).send(segment);
-//      });
-// }
+         return res.status(200).send(segment);
+     });
+}
 
 
 
@@ -55,7 +59,7 @@ function getSegmentByPlatform(req,res){
 function getSegmentById(req,res){
     var AudienceID = req.params.id;
  
-    Segment.findOne({AudienceID: AudienceID}, (err, segment)=>{
+    Segment.findOne({_id: AudienceID}, (err, segment)=>{
         if(err) return res.status(500).send({ message: 'error en la petición' });
       
         if (!segment) return res.status(404).send({ message:'el usuario no existe' });
@@ -109,6 +113,7 @@ function getSegments(req, res) {
 module.exports = {
     getSegments,
     getSegmentById,
+    updateSegmentById,
     getSegmentByStatus,
     getSegmentByPlatform,
     updateIframeForSegment,

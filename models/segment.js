@@ -14,7 +14,7 @@ var SegmentSchema = Schema({
     clientId: String,
     monthlyUniques: Number,
     reach: Number,
-    images: String,
+    image: String,
     category: String,
     keywords: String,
     typePlatform: String,
