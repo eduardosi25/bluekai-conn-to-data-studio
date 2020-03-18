@@ -5,17 +5,22 @@ var Schema = mongoose.Schema;
 var SegmentSchema = Schema({
     AudienceID: String,
     audienceName: String,
+    displayName: String,
     audienceDescription: String,
     audienceCreationDate: String,
-    audienceType: Number,
+    audienceModifiedDate: String,
+    audienceTypeId: Number,
     clientName: String,
-    monthlyUniques: String,
-    classificationMetadata: String,
+    clientId: String,
+    monthlyUniques: Number,
+    reach: Number,
+    images: String,
+    category: String,
+    keywords: String,
     typePlatform: String,
     namePlatform: String,
     urlIframe: String,
     status: String,
-
 })
 
 module.exports = mongoose.model('Segment', SegmentSchema)

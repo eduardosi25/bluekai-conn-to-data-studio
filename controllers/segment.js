@@ -18,6 +18,22 @@ function updateIframeForSegment(req, res){
      });
 }
 
+// function updateSegment(req, res){
+//     var image = req.body.image;
+//     var category = req.body.category;
+//     var displayName = req.body.displayName;
+//     var id = req.params.id;
+
+//     Segment.findByIdAndUpdate({ _id:id }, { image:image, category:category,displayName:displayName }, {new: true},  (err, segment)=>{
+    
+//          if (!segment) return res.status(404).send({ message:'el id no existe' });
+         
+//          if (segment.length === 0) return res.status(404).send({ message:'no hay coincidencias con el id ' });
+ 
+//          return res.status(200).send(segment);
+//      });
+// }
+
 
 
 

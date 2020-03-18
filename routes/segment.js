@@ -10,6 +10,7 @@ api.get('/segment/status/:status', SegmentController.getSegmentByStatus);    //l
 api.get('/segment/id/:id', SegmentController.getSegmentById);       //lista de segmento por id de segmento
 api.get('/segment/platform/:platform', SegmentController.getSegmentByPlatform); //lista de segmentos por plataforma de segmento 
 api.put('/segment/urlIframe/:id', SegmentController.updateIframeForSegment); //lista de segmentos por plataforma de segmento 
+// api.put('/segment/update-segment/:id', SegmentController.updateSegment);
 
 
 
