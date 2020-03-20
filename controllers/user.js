@@ -86,11 +86,11 @@ function loginUser(req,res){
                         return res.status(200).send({user})
                     }
                 }else{
-                    return res.status(404).send({message:'El usuario no se ha podido identificar'});
+                    return res.status(200).send({message:'El usuario no se ha podido identificar'});
                 }
             });
         }else {
-            return res.status(404).send({message:'El usuario no se ha podido identificar!'});
+            return res.status(200).send({message:'El usuario no se ha podido identificar!'});
         }
     })
 }
