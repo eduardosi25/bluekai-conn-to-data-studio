@@ -146,7 +146,7 @@ function updateUser(req, res){
     delete update.password;
 
     if(userId != req.user.sub){
-        return res.status(500).send({message:'no tienes permiso para modificar los datos de usuario'})
+        return res.status(500).send({message:'no tienes permiso para modificar los datos de este usuario'})
     }
     User.findByIdAndUpdate(userId, update, {new:true}, (err,userUpdated)=>{
         //console.log(userUpdated);

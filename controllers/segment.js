@@ -23,11 +23,6 @@ function updateSegmentById(req, res){
     var category = req.body.category;
     var displayName = req.body.displayName;
     var id = req.params.id;
-    console.log(id)
-    console.log(image)
-    console.log(category)
-    console.log(displayName)
-
     Segment.findByIdAndUpdate({ _id: id }, { image: image, category: category, displayName: displayName }, {new: true},  (err, segment)=>{
     
          if (!segment) return res.status(404).send({ message:'el id no existe' });
