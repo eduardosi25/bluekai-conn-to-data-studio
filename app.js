@@ -9,7 +9,7 @@ app.use(cors());
 //cargar rutas
 
 //middleware
-if (process.env.NODE_ENV === 'development') {
+// if (process.env.NODE_ENV === 'development') {
     // CORS settings
 
 // app.use((req, res, next) => {
