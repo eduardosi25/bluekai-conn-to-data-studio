@@ -20,7 +20,7 @@ mongoose.promise = global.promise;
 //                    { useUnifiedTopology: true,  useNewUrlParser: true, useFindAndModify: false})
 if(NODE_ENV === "production")
 {
- mongoose.connect(`mongodb+srv://${DB_USER}:${DB_PASSWORD}@audiencekit1-76o4f.mongodb.net/${DB_TABLE}?retryWrites=true&w=majority`,                    
+ mongoose.connect(`mongodb+srv://${DB_USER}:${DB_PASSWORD}@mongodb.net/${DB_TABLE}?retryWrites=true&w=majority`,                    
       { useUnifiedTopology: true,  useNewUrlParser: true, useFindAndModify: false})
 .then (()=>{
     console.log("la conexion esta lista production")
@@ -32,7 +32,7 @@ if(NODE_ENV === "production")
 }
 else if(NODE_ENV === "development")
 {
-mongoose.connect(`mongodb://mongodb:27017/audienceKit`,
+mongoose.connect(DB_DOMAIN,
                     { useUnifiedTopology: true,  useNewUrlParser: true, useFindAndModify: false})
 .then (()=>{
     console.log("la conexion esta lista desarrollo")

@@ -35,11 +35,11 @@ app.use(bodyParser.json());
 
 //cargar rutas
 
-var segments_routes= require ('./routes/segment')
+var report_routes= require ('./routes/report')
 var user_routes= require ('./routes/user')
 
 // prefijo de rutas 
-app.use('/v1/api', user_routes, segments_routes)
+app.use('/v1/api', report_routes, user_routes)
 
 //exportar 
 module.exports = app;
