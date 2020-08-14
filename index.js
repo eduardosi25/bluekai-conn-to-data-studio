@@ -11,7 +11,7 @@ const BK_DB_USER = process.env.BK_DB_USER;
 const BK_DB_PASSWORD = process.env.BK_DB_PASSWORD;
 const BK_DB_TABLE = process.env.BK_DB_TABLE;
 const BK_NODE_ENV = process.env.BK_NODE_ENV;
-console.log("variables -->", BK_PORT, BK_DB_DOMAIN, BK_DB_USER,BK_DB_PASSWORD, BK_DB_TABLE, BK_NODE_ENV)
+
 //conexion base de datos 
 mongoose.promise = global.promise;
 // mongoose.connect(`mongodb+srv://appaudiencekit:aEqslb71Vh0DUVkD@audiencekit1-76o4f.mongodb.net/audienceKit?retryWrites=true&w=majority`,
@@ -21,7 +21,7 @@ mongoose.promise = global.promise;
 //                    { useUnifiedTopology: true,  useNewUrlParser: true, useFindAndModify: false})
 if(BK_NODE_ENV === "production")
 {
- mongoose.connect(`mongodb+srv://${BK_DB_USER}:${BK_DB_PASSWORD}@audiencekit1-76o4f.mongodb.net/${BK_DB_TABLE}?retryWrites=true&w=majority`,                    
+ mongoose.connect(`mongodb+srv://${BK_DB_USER}:${BK_DB_PASSWORD}@audiencekit1-76o4f.mongodb.net/bluekaiConnector?retryWrites=true&w=majority`,                    
       { useUnifiedTopology: true,  useNewUrlParser: true, useFindAndModify: false})
 .then (()=>{
     console.log("la conexion esta lista production")
