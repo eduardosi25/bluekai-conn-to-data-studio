@@ -21,7 +21,7 @@ mongoose.promise = global.promise;
 //                    { useUnifiedTopology: true,  useNewUrlParser: true, useFindAndModify: false})
 if(BK_NODE_ENV === "production")
 {
- mongoose.connect(`mongodb+srv://${BK_DB_USER}:${BK_DB_PASSWORD}@audiencekit1-76o4f.mongodb.net/bluekaiConnector?retryWrites=true&w=majority`,                    
+ mongoose.connect(`mongodb+srv://${DB_USER}:${DB_PASSWORD}@audiencekit1-76o4f.mongodb.net/bluekaiConnector?retryWrites=true&w=majority`,                    
       { useUnifiedTopology: true,  useNewUrlParser: true, useFindAndModify: false})
 .then (()=>{
     console.log("la conexion esta lista production")
