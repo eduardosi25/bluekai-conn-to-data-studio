@@ -11,6 +11,7 @@ const BK_DB_USER = process.env.BK_DB_USER;
 const BK_DB_PASSWORD = process.env.BK_DB_PASSWORD;
 const BK_DB_TABLE = process.env.BK_DB_TABLE;
 const BK_NODE_ENV = process.env.BK_NODE_ENV;
+console.log("variables -->", BK_PORT, BK_DB_DOMAIN, BK_DB_USER,BK_DB_PASSWORD, BK_DB_TABLE, BK_NODE_ENV)
 //conexion base de datos 
 mongoose.promise = global.promise;
 // mongoose.connect(`mongodb+srv://appaudiencekit:aEqslb71Vh0DUVkD@audiencekit1-76o4f.mongodb.net/audienceKit?retryWrites=true&w=majority`,
@@ -24,6 +25,8 @@ if(BK_NODE_ENV === "production")
       { useUnifiedTopology: true,  useNewUrlParser: true, useFindAndModify: false})
 .then (()=>{
     console.log("la conexion esta lista production")
+    console.log("port -->", BK_PORT, "domain-->", BK_DB_DOMAIN, "user -->",BK_DB_USER,"password-->",BK_DB_PASSWORD, "collection-->",BK_DB_TABLE, "node_env-->",BK_NODE_ENV)
+
     //Crear servidor 
     app.listen(BK_PORT, ()=>{
       console.log(`servidor corriendo en ${process.env.BK_NODE_ENV} mode on port ${BK_PORT}`)
@@ -36,6 +39,8 @@ mongoose.connect(BK_DB_DOMAIN,
                     { useUnifiedTopology: true,  useNewUrlParser: true, useFindAndModify: false})
 .then (()=>{
     console.log("la conexion esta lista desarrollo")
+    console.log("port -->", BK_PORT, "domain-->", BK_DB_DOMAIN, "user -->",BK_DB_USER,"password-->",BK_DB_PASSWORD, "collection-->",BK_DB_TABLE, "node_env-->",BK_NODE_ENV)
+
     //Crear servidor 
     app.listen(BK_PORT, ()=>{
       console.log(`servidor corriendo en ${process.env.BK_NODE_ENV} mode on port ${BK_PORT}`)
