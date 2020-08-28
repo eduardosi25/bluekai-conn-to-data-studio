@@ -4,7 +4,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var ReportSchema = Schema({
     _id: String,
-    audienceId: Number,
+    audienceId: String,
     clientId: String,
     audienceName: String,
     base_segment_size_unfiltered: Number,

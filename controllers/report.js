@@ -54,10 +54,10 @@ function getReportByPlatform(req,res){
 function getReportById(req,res){
     var AudienceID = req.params.id;
  
-    Report.findOne({_id: AudienceID}, (err, report)=>{
+    Report.find({"audienceId": AudienceID}, (err, report)=>{
         if(err) return res.status(500).send({ message: 'error en la petición' });
       
-        if (!report) return res.status(404).send({ message:'el usuario no existe' });
+        if (!report) return res.status(404).send({ message:'no se encontro el id de audiencia' });
   
         return res.status(200).send(report);
     });
@@ -94,7 +94,7 @@ function getReport(req, res) {
    // var identityReportId = req.report.sub;
    //console.log(req)
     var page = 1;
-    var itemsPerPage = 5;
+    var itemsPerPage = 20;
    
     if (req.params.page) {
       page = req.params.page;
