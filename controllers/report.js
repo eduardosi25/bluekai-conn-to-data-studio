@@ -62,6 +62,17 @@ function getReportById(req,res){
         return res.status(200).send(report);
     });
 }
+function getReportByDate(req,res){
+  var date = req.params.date;
+
+  Report.find({"date": date}, (err, report)=>{
+      if(err) return res.status(500).send({ message: 'error en la petición' });
+    
+      if (!report) return res.status(404).send({ message:'el usuario no existe' });
+
+      return res.status(200).send(report);
+  });
+}
 //Conseguir datos de un usuario
 function getReportByStatus(req,res){
   
@@ -110,6 +121,7 @@ module.exports = {
     getReportById,
     updateReportById,
     getReportByStatus,
+    getReportByDate,
     getReportByPlatform,
     updateIframeForReport,
 
