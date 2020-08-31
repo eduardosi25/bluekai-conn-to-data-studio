@@ -67,7 +67,7 @@ function getReportInDate(req,res){
   // var date2 = new Date(req.params.date2);
   console.log(date)
   // console.log(date2)
-  Report.find({'date':{$gte:'2020-08-23', $lte:'2020-08-27'}}), (err, report)=>{
+  Report.find({'date':{'$gte':new Date('2020-08-23'), '$lte':new Date('2020-08-27')}}), (err, report)=>{
       if(err) return res.status(500).send({ message: 'error en la petición' });
     
       if (!report) return res.status(404).send({ message:'el usuario no existe' });
