@@ -62,14 +62,29 @@ function getReportById(req,res){
         return res.status(200).send(report);
     });
 }
-function getReportByDate(req,res){
+function getReportInDate(req,res){
   var date = req.params.date;
+  // var date2 = new Date(req.params.date2);
+  console.log(date)
+  // console.log(date2)
+  Report.find({'date':{$gte:'2020-08-23', $lte:'2020-08-27'}}), (err, report)=>{
+      if(err) return res.status(500).send({ message: 'error en la petición' });
+    
+      if (!report) return res.status(404).send({ message:'el usuario no existe' });
+      // console.log(JSON.stringify(report));
+      return res.status(200).send(report);
+  };
+}
+
+function getReportByDate(req,res){
+  var date = new Date(req.params.date);
+  console.log(date)
 
   Report.find({"date": date}, (err, report)=>{
       if(err) return res.status(500).send({ message: 'error en la petición' });
     
       if (!report) return res.status(404).send({ message:'el usuario no existe' });
-
+      // console.log(JSON.stringify(report));
       return res.status(200).send(report);
   });
 }
@@ -122,6 +137,7 @@ module.exports = {
     updateReportById,
     getReportByStatus,
     getReportByDate,
+    getReportInDate,
     getReportByPlatform,
     updateIframeForReport,
 

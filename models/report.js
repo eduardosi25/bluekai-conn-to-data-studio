@@ -9,7 +9,7 @@ var ReportSchema = Schema({
     audienceName: String,
     base_segment_size_unfiltered: Number,
     odc_universe_reach: Number,
-    date: String,
+    date: Date,
     category_id: Number,
     second_segment_reach: Number,
     category_index: Number,
