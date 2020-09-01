@@ -18,10 +18,11 @@ var ReportSchema = Schema({
     internal_rightCI: Number,
     internal_CL: Number,
     category_description: String,
+    category_name: String,
     data_type: String,
     path_array: String,
     vertical_name: String,
-    category_name: String,
+
 })
 
 module.exports = mongoose.model('Report', ReportSchema)

@@ -3,6 +3,7 @@ var Report = require('../models/report');
 var bcrypt = require('bcrypt-nodejs');
 var jwt = require('../services/jwt');
 var mongoosPaginate = require('mongoose-pagination');
+const { db } = require('../models/report');
 
 function updateIframeForReport(req, res){
     var urlIframe = req.body.urlIframe;
@@ -63,17 +64,16 @@ function getReportById(req,res){
     });
 }
 function getReportInDate(req,res){
-  var date = req.params.date;
-  // var date2 = new Date(req.params.date2);
-  console.log(date)
-  // console.log(date2)
-  Report.find({'date':{'$gte':new Date('2020-08-23'), '$lte':new Date('2020-08-27')}}), (err, report)=>{
+  var date = req.params.date
+  var date2 = req.params.date2
+
+  Report.find({"date":{$gte:new Date(date), $lte: new Date(date2)}}, (err, report)=>{
       if(err) return res.status(500).send({ message: 'error en la petición' });
     
       if (!report) return res.status(404).send({ message:'el usuario no existe' });
       // console.log(JSON.stringify(report));
       return res.status(200).send(report);
-  };
+  });
 }
 
 function getReportByDate(req,res){
@@ -132,7 +132,7 @@ function getReport(req, res) {
   }
 
 module.exports = {
-    getReport,
+
     getReportById,
     updateReportById,
     getReportByStatus,
@@ -140,5 +140,6 @@ module.exports = {
     getReportInDate,
     getReportByPlatform,
     updateIframeForReport,
+    getReport
 
 }

@@ -1,7 +1,6 @@
 'use strict'
 var mongoose = require("mongoose");
 var app = require('./app');
-
 const dotenv = require('dotenv');
 dotenv.config({path:'./config/config.env'});
 const BK_PORT = process.env.BK_PORT || 3000;
@@ -13,6 +12,7 @@ const BK_DB_TABLE = process.env.BK_DB_TABLE;
 const BK_NODE_ENV = process.env.BK_NODE_ENV;
 //conexion base de datos 
 mongoose.promise = global.promise;
+
 // mongoose.connect(`mongodb+srv://appaudiencekit:aEqslb71Vh0DUVkD@audiencekit1-76o4f.mongodb.net/audienceKit?retryWrites=true&w=majority`,
 //                   {useNewUrlParser: true, useUnifiedTopology: true })
 
@@ -32,6 +32,7 @@ if(BK_NODE_ENV === "production")
 }
 else if(BK_NODE_ENV === "development")
 {
+
 mongoose.connect(BK_DB_DOMAIN,
                     { useUnifiedTopology: true,  useNewUrlParser: true, useFindAndModify: false})
 .then (()=>{
