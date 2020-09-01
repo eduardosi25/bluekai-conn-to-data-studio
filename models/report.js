@@ -10,7 +10,7 @@ var ReportSchema = Schema({
     base_segment_size_unfiltered: Number,
     odc_universe_reach: Number,
     date: Date,
-    category_id: Number,
+    category_id: String,
     second_segment_reach: Number,
     category_index: Number,
     base_segment_size_filtered: Number,

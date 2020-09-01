@@ -3,7 +3,40 @@ var Report = require('../models/report');
 var bcrypt = require('bcrypt-nodejs');
 var jwt = require('../services/jwt');
 var mongoosPaginate = require('mongoose-pagination');
-const { db } = require('../models/report');
+
+
+
+//devolver listado de usuarios paginados // Devolver listado de usuario paginados
+function getReport(req, res) {
+  // var identityReportId = req.report.sub;
+  //console.log(req)
+   var page = 1;
+   var itemsPerPage = 6;
+  
+   if (req.params.clientId && req.params.page) {
+     console.log(req.params.clientId)
+     var clientId = req.params.clientId;
+     page = req.params.page;
+     Report.find({"clientId": clientId})
+     .sort("_id")
+     .paginate(page, itemsPerPage, (err, report, total) => {
+       if (err) return res.status(500).send({ message: "Error en la petición" });
+       if (!report) return res.status(404).send({ message: "No hay usuarios disponibles" });
+       //devolver los datos del usuario
+   
+       return res.status(200).send({
+           //devolver los datos del usuario
+         report,
+         total,
+         pages: Math.ceil(total / itemsPerPage)
+       });
+     });
+   }else{
+     return res.status(404).send({ message: "Necesitas un clientId" });
+   }
+   
+}
+
 
 function updateIframeForReport(req, res){
     var urlIframe = req.body.urlIframe;
@@ -32,24 +65,6 @@ function updateReportById(req, res){
  
          return res.status(200).send(report);
      });
-}
-
-
-
-
-function getReportByPlatform(req,res){
-    var platform = req.params.platform;
-    
-    Report.find({"typePlatform": platform}, (err, report)=>{
-       // console.log(report)
-        if(err) return res.status(500).send({ message: 'error en la petición' });
-
-        if (!report) return res.status(404).send({ message:'la plataforma no existe' });
-        
-        if (report.length === 0) return res.status(404).send({ message:'no hay coincidencias con la plataforma ' });
-
-        return res.status(200).send(report);
-    });
 }
 
 function getReportByAudId(req,res){
@@ -116,52 +131,43 @@ function getReportByAudName(req,res){
 
 function getReportByCatName(req,res){
   var catName = req.params.catName;
+  console.log(req.params.catName)  
+  var clientId = req.params.clientId;
+  console.log(req.params.clientId)  
+  if (req.params.clientId && req.params.catName) {
+      Report.find({"clientId": clientId,"category_name": catName}, (err, report)=>{
+          if(err) return res.status(500).send({ message: 'error en la petición' });
+        
+          if (!report) return res.status(404).send({ message:'no se encontro el nombre de la categoria' });
 
-  Report.find({"category_name": catName}, (err, report)=>{
-      if(err) return res.status(500).send({ message: 'error en la petición' });
-    
-      if (!report) return res.status(404).send({ message:'no se encontro el nombre de la categoria' });
-
-      return res.status(200).send(report);
-  });
+          return res.status(200).send(report);
+      });
+  }else{
+    return res.status(404).send({ message: "Necesitas un clientId y un nombre de categoria" });
+  }
 }
+
+
 function getReportByDataType(req,res){
   var dataType = req.params.dataType;
+  console.log(req.params.dataType)
+  var clientId = req.params.clientId;
+  console.log(req.params.clientId)  
+  if (req.params.clientId || req.params.dataType) {
+      
 
-  Report.find({"data_type": dataType}, (err, report)=>{
-      if(err) return res.status(500).send({ message: 'error en la petición' });
-    
-      if (!report) return res.status(404).send({ message:'no se encontro el tipo de dato' });
+      Report.find({"data_type": dataType,"clientId": clientId}, (err, report)=>{
+          if(err) return res.status(500).send({ message: 'error en la petición' });
+        
+          if (!report) return res.status(404).send({ message:'no se encontro el tipo de dato' });
 
-      return res.status(200).send(report);
-  });
-}
-//devolver listado de usuarios paginados // Devolver listado de usuario paginados
-function getReport(req, res) {
-   // var identityReportId = req.report.sub;
-   //console.log(req)
-    var page = 1;
-    var itemsPerPage = 20;
-   
-    if (req.params.page) {
-      page = req.params.page;
-    }
-   
-    Report.find()
-      .sort("_id")
-      .paginate(page, itemsPerPage, (err, report, total) => {
-        if (err) return res.status(500).send({ message: "Error en la petición" });
-        if (!report) return res.status(404).send({ message: "No hay usuarios disponibles" });
-        //devolver los datos del usuario
-    
-        return res.status(200).send({
-            //devolver los datos del usuario
-          report,
-          total,
-          pages: Math.ceil(total / itemsPerPage)
-        });
+          return res.status(200).send(report);
       });
+  }else{
+    return res.status(404).send({ message: "Necesitas un clientId" });
   }
+}
+
 
 module.exports = {
 
@@ -173,7 +179,6 @@ module.exports = {
     getReportByDate,
     getReportInDate,
     getReportByDataType,
-    getReportByPlatform,
     updateIframeForReport,
     getReport
 
