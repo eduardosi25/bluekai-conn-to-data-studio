@@ -13,7 +13,7 @@ function getReport(req, res) {
    var page = 1;
    var itemsPerPage = 6;
   
-   if (req.params.clientId && req.params.page) {
+   if (req.params.clientId || req.params.page) {
      console.log(req.params.clientId)
      var clientId = req.params.clientId;
      page = req.params.page;
@@ -69,14 +69,13 @@ function updateReportById(req, res){
 
 function getReportByAudId(req,res){
     var AudienceID = req.params.id;
- 
-    Report.find({"audienceId": AudienceID}, (err, report)=>{
-        if(err) return res.status(500).send({ message: 'error en la petición' });
+        Report.find({"audienceId": AudienceID}, (err, report)=>{
+            if(err) return res.status(500).send({ message: 'error en la petición' });
+          
+            if (!report) return res.status(404).send({ message:'no se encontro el id de audiencia' });
       
-        if (!report) return res.status(404).send({ message:'no se encontro el id de audiencia' });
-  
-        return res.status(200).send(report);
-    });
+            return res.status(200).send(report);
+        });
 }
 
 function getReportByCliId(req,res){
@@ -94,39 +93,52 @@ function getReportByCliId(req,res){
 function getReportInDate(req,res){
   var date = req.params.date
   var date2 = req.params.date2
-
-  Report.find({"date":{$gte:new Date(date), $lte: new Date(date2)}}, (err, report)=>{
-      if(err) return res.status(500).send({ message: 'error en la petición' });
-    
-      if (!report) return res.status(404).send({ message:'el usuario no existe' });
-      // console.log(JSON.stringify(report));
-      return res.status(200).send(report);
-  });
+  if (req.params.clientId && req.params.date && req.params.date2) {
+      var clientId = req.params.clientId;
+      Report.find({"clientId": clientId,"date":{$gte:new Date(date), $lte: new Date(date2)}}, (err, report)=>{
+          if(err) return res.status(500).send({ message: 'error en la petición' });
+        
+          if (!report) return res.status(404).send({ message:'el usuario no existe' });
+          // console.log(JSON.stringify(report));
+          return res.status(200).send(report);
+      });
+  }else{
+    return res.status(404).send({ message: "Necesitas un clientId y un rango de fechas" });
+  }
 }
 
 function getReportByDate(req,res){
-  var date = new Date(req.params.date);
-  console.log(date)
 
-  Report.find({"date": date}, (err, report)=>{
-      if(err) return res.status(500).send({ message: 'error en la petición' });
-    
-      if (!report) return res.status(404).send({ message:'el usuario no existe' });
-      // console.log(JSON.stringify(report));
-      return res.status(200).send(report);
-  });
+  if (req.params.clientId && req.params.date) {
+      var date = new Date(req.params.date);
+      var clientId = req.params.clientId;
+      Report.find({"clientId": clientId, "date": date}, (err, report)=>{
+          if(err) return res.status(500).send({ message: 'error en la petición' });
+        
+          if (!report) return res.status(404).send({ message:'el usuario no existe' });
+          // console.log(JSON.stringify(report));
+          return res.status(200).send(report);
+      });
+  }else{
+    return res.status(404).send({ message: "Necesitas un clientId y una fecha" });
+  }
 }
 
 function getReportByAudName(req,res){
   var audName = req.params.audName;
+  if (req.params.clientId && req.params.audName) {
+    console.log(req.params.audName)  
+    var clientId = req.params.clientId;   
+    Report.find({"clientId": clientId,"audienceName": audName}, (err, report)=>{
+        if(err) return res.status(500).send({ message: 'error en la petición' });
+      
+        if (!report) return res.status(404).send({ message:'no se encontro el nombre de la audiencia' });
 
-  Report.find({"audienceName": audName}, (err, report)=>{
-      if(err) return res.status(500).send({ message: 'error en la petición' });
-    
-      if (!report) return res.status(404).send({ message:'no se encontro el nombre de la audiencia' });
-
-      return res.status(200).send(report);
-  });
+        return res.status(200).send(report);
+    });
+  }else{
+    return res.status(404).send({ message: "Necesitas un clientId y un nombre de audiencia" });
+  }
 }
 
 function getReportByCatName(req,res){
@@ -153,9 +165,8 @@ function getReportByDataType(req,res){
   console.log(req.params.dataType)
   var clientId = req.params.clientId;
   console.log(req.params.clientId)  
-  if (req.params.clientId || req.params.dataType) {
-      
-
+  
+  if (req.params.clientId && req.params.dataType) {    
       Report.find({"data_type": dataType,"clientId": clientId}, (err, report)=>{
           if(err) return res.status(500).send({ message: 'error en la petición' });
         
@@ -164,7 +175,7 @@ function getReportByDataType(req,res){
           return res.status(200).send(report);
       });
   }else{
-    return res.status(404).send({ message: "Necesitas un clientId" });
+    return res.status(404).send({ message: "Necesitas un clientId y un dataType" });
   }
 }
 
