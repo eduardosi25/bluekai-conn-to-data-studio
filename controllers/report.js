@@ -52,7 +52,7 @@ function getReportByPlatform(req,res){
     });
 }
 
-function getReportById(req,res){
+function getReportByAudId(req,res){
     var AudienceID = req.params.id;
  
     Report.find({"audienceId": AudienceID}, (err, report)=>{
@@ -63,6 +63,19 @@ function getReportById(req,res){
         return res.status(200).send(report);
     });
 }
+
+function getReportByCliId(req,res){
+  var clientID = req.params.id;
+
+  Report.find({"clientId": clientID}, (err, report)=>{
+      if(err) return res.status(500).send({ message: 'error en la petición' });
+    
+      if (!report) return res.status(404).send({ message:'no se encontro el id del cliente' });
+
+      return res.status(200).send(report);
+  });
+}
+
 function getReportInDate(req,res){
   var date = req.params.date
   var date2 = req.params.date2
@@ -88,20 +101,29 @@ function getReportByDate(req,res){
       return res.status(200).send(report);
   });
 }
-//Conseguir datos de un usuario
-function getReportByStatus(req,res){
-  
-    var status = req.params.status
-    Report.find({status:status}, (err, report)=>{
-       console.log(report)
-        if(err) return res.status(500).send({ message: 'error en la petición' });
 
-        if (!report) return res.status(404).send({ message:'el status no existe' });
-       
-        if (report.length === 0) return res.status(404).send({ message:'no hay coincidencias con el status' });
+function getReportByAudName(req,res){
+  var audName = req.params.audName;
 
-        return res.status(200).send(report);
-    });
+  Report.find({"audienceName": audName}, (err, report)=>{
+      if(err) return res.status(500).send({ message: 'error en la petición' });
+    
+      if (!report) return res.status(404).send({ message:'no se encontro el nombre de la audiencia' });
+
+      return res.status(200).send(report);
+  });
+}
+
+function getReportByCatName(req,res){
+  var catName = req.params.catName;
+
+  Report.find({"category_name": catName}, (err, report)=>{
+      if(err) return res.status(500).send({ message: 'error en la petición' });
+    
+      if (!report) return res.status(404).send({ message:'no se encontro el nombre de la categoria' });
+
+      return res.status(200).send(report);
+  });
 }
 
 //devolver listado de usuarios paginados // Devolver listado de usuario paginados
@@ -133,9 +155,11 @@ function getReport(req, res) {
 
 module.exports = {
 
-    getReportById,
+    getReportByAudId,
+    getReportByAudName,
+    getReportByCatName,
+    getReportByCliId,
     updateReportById,
-    getReportByStatus,
     getReportByDate,
     getReportInDate,
     getReportByPlatform,

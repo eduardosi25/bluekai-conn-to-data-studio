@@ -20,7 +20,7 @@ var ReportSchema = Schema({
     category_description: String,
     category_name: String,
     data_type: String,
-    path_array: String,
+    category_path: String,
     vertical_name: String,
 
 })
