@@ -125,7 +125,17 @@ function getReportByCatName(req,res){
       return res.status(200).send(report);
   });
 }
+function getReportByDataType(req,res){
+  var dataType = req.params.dataType;
 
+  Report.find({"data_type": dataType}, (err, report)=>{
+      if(err) return res.status(500).send({ message: 'error en la petición' });
+    
+      if (!report) return res.status(404).send({ message:'no se encontro el tipo de dato' });
+
+      return res.status(200).send(report);
+  });
+}
 //devolver listado de usuarios paginados // Devolver listado de usuario paginados
 function getReport(req, res) {
    // var identityReportId = req.report.sub;
@@ -162,6 +172,7 @@ module.exports = {
     updateReportById,
     getReportByDate,
     getReportInDate,
+    getReportByDataType,
     getReportByPlatform,
     updateIframeForReport,
     getReport
