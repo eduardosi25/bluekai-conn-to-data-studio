@@ -91,9 +91,10 @@ function getReportByCliId(req,res){
 }
 
 function getReportInDate(req,res){
-  var date = req.params.date
-  var date2 = req.params.date2
+
   if (req.params.clientId && req.params.date && req.params.date2) {
+      var date = req.params.date;
+      var date2 = req.params.date2;
       var clientId = req.params.clientId;
       Report.find({"clientId": clientId,"date":{$gte:new Date(date), $lte: new Date(date2)}}, (err, report)=>{
           if(err) return res.status(500).send({ message: 'error en la petición' });
