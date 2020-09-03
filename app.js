@@ -3,11 +3,11 @@
 var express = require('express');
 var bodyParser = require ('body-parser');
 var cors = require('cors');
-const morgan = require('morgan');
+// const morgan = require('morgan');
 var app = express();
 
 app.use(cors());
-app.use(morgan('dev'))
+// app.use(morgan('dev'))
 //cargar rutas
 
 // middleware
