@@ -18,29 +18,31 @@ function pruebas (req, res){
 }
 
 function saveUser (req, res){
-    console.log("hola");
+    // console.log("hola");
     var params = req.body;
     var user = new User();
-   // console.log(params)
+    console.log(params)
     if (params.name && params.lastname && 
         params.email && params.password){
 
             user.name = params.name;
             user.lastname = params.lastname;
             user.clientId = '2';
-            user.status = params.status;
+            user.status = "activo";
             user.email = params.email;
             user.password = params.password;
             user.role = 'ROLE_USER';
-            user.clientId = params.clientId;
-            user.status = params.status;
+            // user.clientId = params.clientId;
+
+
             //controlar usuarios duplicados
             User.find({email:user.email.toLowerCase()})
             .exec((err, users)=>{
                 if (err) return res.status(500).send({message: 'error en la peticion de usuarios'})
                 if ( users && users.length >= 1 ){
                     return res.status(200).send({message:'el usuario que intentas registrar ya existe'})
-                }else{
+                }else{            
+                    //cifra los datos y guarda la pass
                     bcrypt.hash(params.password, null, null,(err, hash)=>{
                         user.password = hash;
                         user.save((err,userStored)=>{
@@ -55,7 +57,6 @@ function saveUser (req, res){
                 }
             });
       
-            //cifra los datos y guarda la pass
     }else{
             res.status(200).send({
                 message: 'Envia todos los campos necesarios'
@@ -86,11 +87,11 @@ function loginUser(req,res){
                         return res.status(200).send({user})
                     }
                 }else{
-                    return res.status(200).send({message:'El usuario no se ha podido identificar'});
+                    return res.status(404).send({message:'El usuario no se ha podido identificar'});
                 }
             });
         }else {
-            return res.status(200).send({message:'El usuario no se ha podido identificar!'});
+            return res.status(404).send({message:'El usuario no se ha podido identificar!'});
         }
     })
 }

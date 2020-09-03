@@ -4,7 +4,7 @@ var jwt = require('jwt-simple');
 var moment = require('moment');
 const dotenv = require('dotenv');
 dotenv.config({path:'./config/config.env'});
-const JWT_SECRET = process.env.JWT_SECRET;
+const JWT_SECRET = process.env.BK_JWT_SECRET;
 
 
 exports.ensureAuth = function(req, res, next){
