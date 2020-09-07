@@ -12,6 +12,8 @@ exports.ensureAuth = function(req, res, next){
         return res.status(403).send({message: 'la peticion no tiene cabacera de autorizacion'});
     }
     var token = req.headers.authorization.replace(/['"]+/g,'');
+    var token = req.headers.authorization.split(" ")[1];
+    console.log("token --->",token)
     try{
         var payload = jwt.decode(token, `${JWT_SECRET}`);
         if (payload.exp <= moment().unix()){
