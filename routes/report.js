@@ -13,7 +13,7 @@ api.get('/report/clientId/:id', ReportController.getReportByCliId);       //list
 api.get('/report/audName/:clientId?/:audName', ReportController.getReportByAudName);
 api.get('/report/catName/:clientId?/:catName?', ReportController.getReportByCatName);
 api.get('/report/dataType/:clientId?/:dataType?', ReportController.getReportByDataType);
-api.get('/report/:clientId?/:page?', ReportController.getReport);   //lista de report totales paginados
+api.get('/report/:clientId?/:page?', md_awth.ensureAuth, ReportController.getReport);   //lista de report totales paginados
 
 api.put('/report/urlIframe/:id', md_awth.ensureAuth, ReportController.updateIframeForReport); //lista de report por plataforma de segmento 
 api.put('/report/updateReport/:id', md_awth.ensureAuth, ReportController.updateReportById);
