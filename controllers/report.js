@@ -24,12 +24,13 @@ function getReport(req, res) {
        if (!report) return res.status(404).send({ message: "No hay usuarios disponibles" });
        //devolver los datos del usuario
    
-       return res.status(200).send({
+       return res.status(200).send(//{
            //devolver los datos del usuario
-         report,
-         total,
-         pages: Math.ceil(total / itemsPerPage)
-       });
+         report
+         //total,
+         //pages: Math.ceil(total / itemsPerPage)
+      // }
+       );
      });
    }else{
      return res.status(404).send({ message: "Necesitas un clientId" });
