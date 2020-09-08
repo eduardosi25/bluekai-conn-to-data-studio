@@ -103,7 +103,7 @@ function getReportInDate(req,res){
           if (!report) return res.status(404).send({ message:'el usuario no existe' });
           // console.log(JSON.stringify(report));
           return res.status(200).send(report);
-      });
+      }).limit(20);
   }else{
     return res.status(404).send({ message: "Necesitas un clientId y un rango de fechas" });
   }
