@@ -3,6 +3,11 @@ var User = require('../models/user');
 var bcrypt = require('bcrypt-nodejs');
 var jwt = require('../services/jwt');
 var mongoosPaginate = require('mongoose-pagination');
+var jwt = require('jwt-simple');
+var moment = require('moment');
+const dotenv = require('dotenv');
+dotenv.config({path:'./config/config.env'});
+const JWT_SECRET = process.env.BK_JWT_SECRET;
 
 function home(req, res){
     res.status(200).send({
@@ -63,6 +68,30 @@ function saveUser (req, res){
             });
         }
  }
+
+
+ function loginUserWithToken(req,res){
+    var token = req.headers['authorization']
+    console.log(token)
+    if (!token) {
+        res.status(401).send({
+          ok: false,
+          message: 'Toket inválido'
+        })
+      }
+      token = token.replace('Bearer ', '')
+      var payload = jwt.decode(token, `${JWT_SECRET}`);
+      console.log(payload.sub)
+      User.findById(payload.sub, (err, user)=>{
+        if(err) return res.status(500).send({message:'error en la petición'});
+      
+        if (!user) return res.status(404).send({message:'el usuario no existe'});
+        user.password = undefined;
+        return res.status(200).send({user});
+    });
+}
+
+
 
 function loginUser(req,res){
     console.log("login")
@@ -162,6 +191,7 @@ module.exports = {
     pruebas,
     saveUser,
     loginUser,
+    loginUserWithToken,
     getUser,
     getUsers,
     updateUser

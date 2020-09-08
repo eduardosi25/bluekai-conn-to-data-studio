@@ -9,6 +9,7 @@ api.get('/user/home', UserController.home);
 api.get('/user/pruebas', md_awth.ensureAuth, UserController.pruebas);
 api.post('/user/register', UserController.saveUser);
 api.post('/user/login', UserController.loginUser);
+api.post('/user/loginToken', md_awth.ensureAuth, UserController.loginUserWithToken);
 api.get('/user/:id', md_awth.ensureAuth, UserController.getUser);
 api.get('/users/:page?', md_awth.ensureAuth, UserController.getUsers);
 api.put('/user/update-user/:id', md_awth.ensureAuth, UserController.updateUser);
