@@ -3,7 +3,7 @@ var User = require('../models/user');
 var bcrypt = require('bcrypt-nodejs');
 var jwt = require('../services/jwt');
 var mongoosPaginate = require('mongoose-pagination');
-var jwt = require('jwt-simple');
+var jwts = require('jwt-simple');
 var moment = require('moment');
 const dotenv = require('dotenv');
 dotenv.config({path:'./config/config.env'});
@@ -76,11 +76,11 @@ function saveUser (req, res){
     if (!token) {
         res.status(401).send({
           ok: false,
-          message: 'Toket inválido'
+          message: 'Token inválido'
         })
       }
       token = token.replace('Bearer ', '')
-      var payload = jwt.decode(token, `${JWT_SECRET}`);
+      var payload = jwts.decode(token, `${JWT_SECRET}`);
       console.log(payload.sub)
       User.findById(payload.sub, (err, user)=>{
         if(err) return res.status(500).send({message:'error en la petición'});
