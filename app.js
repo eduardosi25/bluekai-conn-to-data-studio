@@ -3,7 +3,7 @@
 var express = require('express');
 var bodyParser = require ('body-parser');
 var cors = require('cors');
-const morgan = require('morgan');
+
 var app = express();
 
 app.use(cors());
@@ -11,7 +11,7 @@ app.use(cors());
 
 // middleware
 if (process.env.NODE_ENV === 'development') {
-    
+const morgan = require('morgan');
 app.use(morgan('dev'))
 
 app.use((req, res, next) => {
